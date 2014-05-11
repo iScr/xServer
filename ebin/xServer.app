@@ -1,0 +1,12 @@
+{application,xServer,
+             [{description,[]},
+              {vsn,"1"},
+              {registered,[]},
+              {applications,[kernel,stdlib]},
+              {mod,{xServer_app,[]}},
+              {env,[]},
+              {modules,[lib_account,lib_player,lib_send,mod_kernel,mod_login,
+                        mod_player,pp_account,pp_player,pt,pt_10,pt_13,
+                        sd_networking,sd_reader,sd_sup,sd_tcp_acceptor,
+                        sd_tcp_acceptor_sup,sd_tcp_client_sup,sd_tcp_listener,
+                        sd_tcp_listener_sup,util,x,xServer_app,xServer_sup]}]}.
