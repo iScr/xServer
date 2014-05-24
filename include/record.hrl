@@ -37,7 +37,50 @@
   mhp = 100,
   coin = 1000,
   exp = 0,
+  heros = [],
+  customs_pass = [],
   create_time = []
+}).
+
+%% 英雄表
+-record(hero, {
+  id,
+  tid,
+  lv,
+  exp,
+  crit,
+  dodge,
+  create_time
+}).
+%% 英雄模板表
+-record(hero_template, {
+  tid,
+  name,
+  type,
+  base_hp,
+  base_def,
+  base_att,
+  base_speed,
+  grow_hp,
+  grow_def,
+  grow_att,
+  grow_speed,
+  quality
+}).
+
+%% 怪物表
+-record(monster, {
+  tid,
+  lv,
+  name,
+  hp,
+  att,
+  def,
+  speed,
+  crit,
+  dodge,
+  exp
+
 }).
 
 %%玩家物品记录

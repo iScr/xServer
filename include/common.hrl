@@ -39,6 +39,8 @@
 -define(DB_ACCOUNT, account).
 -define(DB_unique_id, unique_id).
 -define(DB_CHARACTER, player).
+-define(DB_HERO, hero).
+
 
 -define(DIFF_SECONDS_1970_1900, 2208988800).
 -define(DIFF_SECONDS_0000_1900, 62167219200).
