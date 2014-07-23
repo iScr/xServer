@@ -22,19 +22,41 @@ return_most_fun_of_module() ->
 
 % [{Module, [fun, fun...]}, {Module, [fun, fun...]}]
 
-return_most_fun_name() ->
-	Mod_and_fun_list = mod_and_fun_list(),
-	L1 = [X || {_Mod, X } <- Mod_and_fun_list],
-	L2 = lists:flatten(L1).
+% return_most_fun_name() ->
+% 	Mod_and_fun_list = mod_and_fun_list(),
+% 	L1 = [X || {_Mod, X } <- Mod_and_fun_list],
+% 	L2 = lists:flatten(L1),
+% 	count_functions(L2, #{}).
 
-same_fun_name_map([], Map) ->
-	Map;
 
-same_fun_name_map([H | T], Map) ->
-	case maps:is_key(H, Map) of
-		true -> same_fun_name_map(T, Map#{H := maps:get(H, Map) + 1});
-		false -> same_fun_name_map(T, Map#{H => 1})
-	end.
+% % same_fun_name_map([], Map) ->
+% % 	Map;
+
+% % same_fun_name_map([H | T], Map) ->
+% % 	Mname = H,
+% % 	case maps:is_key(H, Map) of
+% % 		true -> same_fun_name_map(T, Map#{Mname := maps:get(H, Map) + 1});
+% % 		false -> same_fun_name_map(T, Map#{Mname => 1})
+% % 	end.
+
+% count_functions([], X) ->
+% 	X;
+
+% count_functions([H|T], #{H => N} = X) ->
+% 	count_functions(T, X#{H := N+1});
+% count_functions([H|T], X) ->
+% 	count_functions(T, X#{H => 1}).
+
+count_characters(Str) ->
+	count_characters(Str, #{}).
+
+count_characters([H|T], #{ H => N } = X) ->
+	count_characters(T, X#{ H := N+1});
+
+count_characters([H|T], X) ->
+	count_characters(T, X#{ H => 1});
+count_characters([], X) ->
+	X.
 
 
 mod_and_fun_list() ->
