@@ -10,7 +10,7 @@ return_most_fun_of_module() ->
 	end,
 
 	L1 = [F2(X) || X <- Mod_and_fun_list],
-	[H | _T] = lists:reverse(qsort(L1)),
+	[H | _T] = qsort(L1),
 	H.
 
 	% lists:sort(fun({_, N1}, {_, N2}) -> 
@@ -27,9 +27,11 @@ return_most_fun_name() ->
 	L1 = [X || {_Mod, X } <- Mod_and_fun_list],
 	L2 = lists:flatten(L1),
 	L3 = dict:to_list(same_fun_name_map(L2, dict:new())),
-	lists:sort(fun({_, N1}, {_, N2}) -> 
-		N1 > N2
-	end, L3).
+	[H|_T] = qsort(L3),
+	H.
+	%lists:sort(fun({_, N1}, {_, N2}) -> 
+	%	N1 > N2
+	%end, L3).
 
 
 
@@ -78,6 +80,6 @@ mod_and_fun_list() ->
 qsort([])-> [];
 qsort([H|T]) ->
 	{_, CntH} = H, 
-	qsort([{Mod, CntX} || {Mod, CntX} <-T, CntX < CntH]) 
+	qsort([{Mod, CntX} || {Mod, CntX} <- T,  CntX >= CntH])
 	++ [H] ++
-	qsort([{Mod, CntX} || {Mod, CntX} <- T,  CntX >= CntH]).
+	qsort([{Mod, CntX} || {Mod, CntX} <-T, CntX < CntH]). 
