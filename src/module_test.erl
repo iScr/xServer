@@ -13,6 +13,40 @@ return_most_fun_of_module() ->
 	[H | _T] = qsort(L1),
 	H.
 
+
+
+return_only_once_function() ->
+	Mod_and_fun_list = mod_and_fun_list(),
+	F = fun(X) ->
+		{Mod, L}  =  X,
+		[{Mod,X1} || X1<- L]
+	end,
+	L = [F (X) || X <- Mod_and_fun_list],
+	D = next_fun_list(L, dict:new()),
+	L2 = dict:to_list(D),
+	io:format("all name function length: ~p~n", [length(L2)]),
+	L3  = [{Mod, [H]} || {Mod, [H | []]} <- L2],
+	length(L3).
+
+	% start_count_functions(L, dict:new()).
+
+next_fun_list([], Dict) ->
+	Dict;
+next_fun_list([H | T], Dict) ->
+	next_fun_list(T, count_functions(H, Dict)).
+
+
+count_functions([], Dict)   ->
+	Dict;
+
+count_functions([H | T], Dict) ->
+	{_ModName, {FunName, _}} = H,
+	Dict1 = case dict:is_key(FunName, Dict) of
+		true -> dict:update(FunName, fun(L) -> [H|L] end, Dict);
+		false -> dict:store(FunName, [H], Dict)
+	end,
+	count_functions(T, Dict1).
+
 	% lists:sort(fun({_, N1}, {_, N2}) -> 
 	% 	N1 > N2
 	% end, L1).
