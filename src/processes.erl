@@ -6,20 +6,15 @@ max(N) ->
 	Max = erlang:system_info(process_limit),
 	io:format("Maximum allowed processes:~p~n", [Max]),
 	statistics(runtime),
-	statistics(sall_clock),
+	statistics(wall_clock),
 
-	N.
-
-loop () ->
-	receive 
-		{rectangle, W, H} ->
-			io:format("Area of rectangle is ~p~n", [W * H]),
-			loop();
-		{circle, R} ->
-			io:format("Area of circle is ~p~n", [3.14 * R * R]),
-			loop()
-	end.
-
+	L = for(1, N, fun() -> spawn(fun() -> wait() end) end),
+	{_, Time1} = statistics(runtime),
+	{_, Time2} = statistics(wall_clock),
+	lists:foreach(fun(Pid) -> Pid ! die end, L),
+	U1 = Time1 * 1000 / N,
+	U2 = Time2 * 1000 / N,
+	io:format("Process spawn time = ~p (~p) microseconds ~n", [U1, U2]).
 
 
 wait() ->
